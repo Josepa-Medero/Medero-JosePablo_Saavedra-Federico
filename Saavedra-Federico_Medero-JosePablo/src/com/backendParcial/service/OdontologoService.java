@@ -3,11 +3,9 @@ package com.backendParcial.service;
 
 import com.backendParcial.dao.IDao;
 import com.backendParcial.entity.Odontologo;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class OdontologoService implements IDao {
+public class OdontologoService {
 
     private IDao<Odontologo> odontologoIDao;
 
@@ -15,42 +13,10 @@ public class OdontologoService implements IDao {
 
     public Odontologo guardarOdontologo(Odontologo odontologo) { return odontologoIDao.guardar(odontologo);}
 
-    public Odontologo listarOdontologo(Odontologo odontologo) { return odontologoIDao.listar(odontologo);}
+    public List<Odontologo> listarOdontologo() { return odontologoIDao.listarTodos();}
 
 
-
-    //CONSIGNA 2:
-
-    private List<Odontologo> odontologos;
-
-    public void IDao() {
-        odontologos = new ArrayList<>();
-    }
-
-    @Override
-    public void guardarOdontologos(Odontologo odontologo) {
-        odontologos.add(odontologo);
-    }
-
-    @Override
-    public List<Odontologo> listarOdontologos() {
-        return odontologos;
-    }
-
-
-    //METODOS DE IDAO
-
-    @Override
-    public Object guardar(Object odontologo) {
-        return null;
-    }
-    @Override
-    public Object listar(Object odontologo) {
-        return null;
-    }
-    @Override
-    public List listarTodos() {
-        return null;
-    }
 }
+
+
 

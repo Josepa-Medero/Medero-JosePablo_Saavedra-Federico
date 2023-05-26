@@ -1,11 +1,13 @@
 package com.backendParcial.service;
 
-import com.backendParcial.dao.IDao;
+
 import com.backendParcial.dao.impl.OdontologoDaoH2;
 import com.backendParcial.entity.Odontologo;
-import com.backendParcial.service.OdontologoService;
-
+import org.junit.Test;
 import java.sql.Connection;
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 public class OdontologoServiceTest {
 
@@ -13,10 +15,13 @@ public class OdontologoServiceTest {
     private OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2() {
     });
 
-public void  deberiaListarOdontologo(){
+    @Test
+    public void  deberiaListarOdontologo(){
     Odontologo odo1 = new Odontologo(1234,"Juan", "Perez");
     Odontologo odo2 = new Odontologo(5678,"Juana", "Lopez");
 
-    odontologoService.guardarOdontologo(odo1);
+    List<Odontologo> odonTest = odontologoService.listarOdontologo();
+    assertTrue(odonTest.size() >= 2);
+
 }
 }

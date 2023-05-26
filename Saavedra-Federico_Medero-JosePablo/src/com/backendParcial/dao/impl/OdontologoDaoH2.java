@@ -6,6 +6,7 @@ import com.backendParcial.entity.Odontologo;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OdontologoDaoH2 implements IDao<Odontologo> {
@@ -20,7 +21,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             connection = H2Connection.getConnection();
             connection.setAutoCommit(false);
 
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO ODONTOLOGO (NUMERO DE MATRICULO, NOMBRE, APELLIDO) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO ODONTOLOGO (MATRICULA, NOMBRE, APELLIDO) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, odontologo.getNumeroDeMatricula());
             ps.setString(2, odontologo.getNombre());
             ps.setString(3, odontologo.getApellido());
@@ -59,29 +60,51 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         return odontologo;
     }
 
-
-    @Override
-    public Odontologo listar(Odontologo odontologo) {
-        return null;
-    }
-
     @Override
     public List<Odontologo> listarTodos() {
-        return null;
+        Connection connection = null;
+        List<Odontologo> odontologo = new ArrayList<>();
+        try {
+            connection = H2Connection.getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGOS");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                odontologo.add(crearObjetoOdontologo(rs));
+            }
+            connection.commit();
+            LOGGER.info("Listado de todos los odontologos: " + odontologo);
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    System.out.println("Tuvimos un problema");
+                    e.printStackTrace();
+                } catch (SQLException exception) {
+                    LOGGER.error(exception.getMessage());
+                    exception.printStackTrace();
+                }
+            }
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception ex) {
+                LOGGER.error("Ha ocurrido un error al intentar cerrar la bdd. " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        return odontologo;
     }
 
-    @Override
-    public Odontologo guardarOdontologo(Odontologo odontologo) {
-        return null;
-    }
+    private Odontologo crearObjetoOdontologo(ResultSet rs) {
 
-    @Override
-    public void guardarOdontologos(Odontologo odontologo) {
-
-    }
-
-    @Override
-    public List<Odontologo> listarOdontologos() {
         return null;
     }
 }
+
+
+
+
