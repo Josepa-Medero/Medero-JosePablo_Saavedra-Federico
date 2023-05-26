@@ -63,14 +63,16 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
     @Override
     public List<Odontologo> listarTodos() {
         Connection connection = null;
-        List<Odontologo> odontologo = new ArrayList<>();
+        List<Odontologo> odontologos = new ArrayList<>();
         try {
             connection = H2Connection.getConnection();
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGO");
             ResultSet rs = ps.executeQuery();
+            Odontologo odontologo = null;
             while (rs.next()) {
-                odontologo.add(crearObjetoOdontologo(rs));
+                odontologo = crearObjetoOdontologo(rs);
+                odontologos.add(odontologo);
             }
             connection.commit();
             LOGGER.info("Listado de todos los odontologos: " + odontologo);
@@ -78,16 +80,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                    System.out.println("Tuvimos un problema");
-                    e.printStackTrace();
-                } catch (SQLException exception) {
-                    LOGGER.error(exception.getMessage());
-                    exception.printStackTrace();
-                }
-            }
+
         } finally {
             try {
                 connection.close();
@@ -96,7 +89,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
                 ex.printStackTrace();
             }
         }
-        return odontologo;
+        return odontologos;
     }
 
     private Odontologo crearObjetoOdontologo(ResultSet rs) {

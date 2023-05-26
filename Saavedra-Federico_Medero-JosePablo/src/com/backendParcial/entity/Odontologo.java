@@ -45,4 +45,7 @@ public class Odontologo {
     public String toString(){
     return "Numero de Matricula: " + numeroDeMatricula + " - Nombre: " + Nombre + " Apellido: " + Apellido;
     }
+
+    public void add(Odontologo crearObjetoOdontologo) {
+    }
 }

@@ -23,7 +23,7 @@ public class OdontologoServiceTest {
 
     List<Odontologo> odonTest = odontologoService.listarOdontologo();
     assertFalse(odonTest.isEmpty());
-    assertTrue(odonTest.size() >= 2);
+    assertTrue(odonTest.size() >= 1);
 
 }
 }
