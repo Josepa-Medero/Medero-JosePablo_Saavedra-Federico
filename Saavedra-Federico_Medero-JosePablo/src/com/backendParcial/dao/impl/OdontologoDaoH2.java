@@ -67,7 +67,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         try {
             connection = H2Connection.getConnection();
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGOS");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGO");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 odontologo.add(crearObjetoOdontologo(rs));

@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class OdontologoServiceTest {
@@ -21,6 +22,7 @@ public class OdontologoServiceTest {
     Odontologo odo2 = new Odontologo(5678,"Juana", "Lopez");
 
     List<Odontologo> odonTest = odontologoService.listarOdontologo();
+    assertFalse(odonTest.isEmpty());
     assertTrue(odonTest.size() >= 2);
 
 }
